@@ -1,0 +1,28 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+.land {
+  -webkit-animation: paintbackground 10s;
+  stroke: pink;
+}
+
+.state {
+  fill: none;
+  stroke: red;
+}
+
+
+@-webkit-keyframes paintbackground {
+  0%{
+    fill: red;
+  }
+  50%{
+    fill: blue;
+  }
+  100%{
+    fill: red;
+  }
+}

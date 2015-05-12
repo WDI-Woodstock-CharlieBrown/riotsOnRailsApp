@@ -11,6 +11,8 @@ class RiotsController < ApplicationController
 #           PUT    /riots/:id(.:format)      riots#update
 #           DELETE /riots/:id(.:format)      riots#destroy
 
+
+
   def index
   	@riots = Riot.all
   end

@@ -1,3 +1,10 @@
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+
+
+
+var app = app || {};
+
 var width, height, projection, path, svg;
 
 var latitude;
@@ -12,11 +19,20 @@ function projectData(data){
   .data(data)
   .enter()
   .append("circle")
-  .attr("r", 5);
+  .attr("r", 5)
+  .on("mousedown", function() {
+    // div.text("div.mousedown");
+    $('#widget').hide();
+    $('#widget').text('DATA WILL GO HERE');
+    $('#widget').fadeIn(2000);
+    // $('body').append('BOOM it was bad I swear')
+
+  });
+;
 
   svg.selectAll("circle")
   .data(data)
-  .transition(5000)
+  .transition(1000)
   .attr("r", 5)
   .attr("transform", function(d) {return "translate(" + projection([d.lat,d.long]) + ")";})
   .transition()
@@ -73,18 +89,18 @@ $(document).ready(function(){
 
           $.ajax({
             method: 'get',
-            url: 'https://a.tiles.mapbox.com/v4/bhaymaker.m4p56538/features.json?access_token=pk.eyJ1IjoiYmhheW1ha2VyIiwiYSI6InVqYmFDUE0ifQ.uWWBPA7XdIM2Xht-U7AmxA',
+            url: "/api/riots",
             success: function(d){
 
-              longitude = d.features[3].geometry.coordinates[0];
-              latitude = d.features[3].geometry.coordinates[1];
-              city = d.features[3].properties.title;
-              descrip = d.features[3].properties.description;
-              data.push({name: city, lat: longitude, long: latitude, numPeople: 400});
+              // longitude = d.features[3].geometry.coordinates[0];
+              // latitude = d.features[3].geometry.coordinates[1];
+              // city = d.features[3].properties.title;
+              // descrip = d.features[3].properties.description;
+              // data.push({name: city, lat: longitude, long: latitude, numPeople: 400});
 
-              console.log(longitude, latitude, city, descrip);
+              // console.log(longitude, latitude, city, descrip);
               console.log(data);
-              projectData(data);
+              // projectData(data);
 
             }
           });
@@ -98,4 +114,8 @@ $(document).ready(function(){
 
   }, 5000);
 
+
+
+
 });
+
