@@ -15,5 +15,5 @@
 //= require turbolinks
 //= require_tree .
 //= require d3
-//= topojson.js
-//= us.js
+//= require topojson
+//= require us.js

@@ -20,6 +20,7 @@ function projectData(data){
   .enter()
   .append("circle")
   .attr("r", 5)
+  .attr("fill", 'rgba(215, 233, 68, 0.85)')
   .on("mousedown", function() {
     // div.text("div.mousedown");
     $('#widget').hide();
@@ -32,14 +33,13 @@ function projectData(data){
 
   svg.selectAll("circle")
   .data(data)
-  .transition(1000)
-  .attr("r", 5)
+  .attr("r", 4)
   .attr("transform", function(d) {return "translate(" + projection([d.lat,d.long]) + ")";})
   .transition()
-    .duration(5000)
+    .duration(4000)
     .delay(1000)
-    .attr("r", function(d){ return d.numPeople/10 })
-    .attr("fill", 'lightyellow');
+    .attr("r", function(d){ return d.numPeople/50 })
+    .attr("fill", 'rgba(215, 233, 68, 0.85)');
 
   svg.selectAll("circle")
     .data(data)
@@ -92,6 +92,14 @@ $(document).ready(function(){
             url: "/api/riots",
             success: function(d){
 
+            	for (var i = 0; i < d.length; i++) {
+            		latitude = d[i].lat;
+            		longitude = d[i].long;
+            		city = d[i].city_state;
+            		var arrested = d[i].num_arrested;
+            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested});
+            	};
+
               // longitude = d.features[3].geometry.coordinates[0];
               // latitude = d.features[3].geometry.coordinates[1];
               // city = d.features[3].properties.title;
@@ -99,8 +107,8 @@ $(document).ready(function(){
               // data.push({name: city, lat: longitude, long: latitude, numPeople: 400});
 
               // console.log(longitude, latitude, city, descrip);
-              console.log(data);
-              // projectData(data);
+              console.log(d);
+              projectData(data);
 
             }
           });

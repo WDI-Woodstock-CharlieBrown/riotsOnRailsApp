@@ -5,17 +5,19 @@
 
 
 .land {
-  -webkit-animation: paintbackground 10s;
-  stroke: pink;
+ 	
+ 	fill: rgb(95, 135, 160);
+  	stroke: black;
+
 }
 
 .state {
-  fill: none;
-  stroke: red;
+  	fill: none;
+  	stroke: black;
 }
 
 
-@-webkit-keyframes paintbackground {
+/*@-webkit-keyframes paintbackground {
   0%{
     fill: red;
   }
@@ -25,4 +27,4 @@
   100%{
     fill: red;
   }
-}
+}*/
