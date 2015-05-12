@@ -1,0 +1,76 @@
+<%= form_for @riot do |f| %>
+	<p></p>
+	<%= f.label :city_state, "City & State" %>
+	<%= f.text_field :city_state, placeholder: "Chicago, Illinois" %>
+	<p></p>
+	<%= f.label :year, "Year" %>
+	<%= f.number_field :year, placeholder: "1968" %>
+	<p></p>
+	<%= f.label :date, "Date of incident" %>
+	<%= f.text_field :date, placeholder: "April 4 - April 6" %>
+	<p></p>
+	<%= f.label :causes, "Causes" %>
+	<%= f.text_area :causes, placeholder: "Civil Unrest" %>
+	<p></p>
+	<%= f.label :description_short, "Short summary of event" %>
+	<%= f.text_area :description_short, placeholder: "..." %>
+	<p></p>
+	<%= f.label :description_long, "Long description" %>
+	<%= f.text_area :description_long, placeholder: "..." %>
+	<p></p>
+	<%= f.label :deaths, "# of deaths" %>
+	<%= f.number_field :deaths %>
+	<p></p>
+	<%= f.label :injuries, "# injured" %>
+	<%= f.number_field :injuries %>
+	<p></p>
+	<%= f.label :num_arrested, "Total arrested" %>
+	<%= f.number_field :num_arrested %>
+	<p></p>
+	<%= f.label :imagee, "Image URL" %>
+	<%= f.url_field :image %>
+	<p></p>
+	<%= f.label :url, "Website URL" %>
+	<%= f.url_field :url %>
+	<p></p>
+	<%= f.label :damages, "Damages $" %>
+	<%= f.number_field :damages %>
+	<p></p>
+	<%= f.label :police_force, "Total police presence" %>
+	<%= f.number_field :police_force %>
+	<p></p>
+	<%= f.label :military_force, "Total military presence" %>
+	<%= f.number_field :military_force %>
+	<p></p>
+	<%= f.label :sum_of_force, "Total force present" %>
+	<%= f.number_field :sum_of_force %>
+	<p></p>
+	<%= f.label :lat, "Latitude" %>
+	<%= f.number_field :lat %>
+	<p></p>
+	<%= f.label :long, "Longitude" %>
+	<%= f.number_field :long %>
+	<p></p>
+	<%= f.label :city_id, "Corresponding City ID" %>
+	<%= f.number_field :city_id %>
+
+	<%= f.submit "Submit" %>
+
+<% end %>
+<!-- 
+ t.string :city_state
+      t.integer :year
+      t.string :date
+      t.string :causes
+      t.text :description_short
+      t.text :description_long
+      t.integer :deaths
+      t.integer :injuries
+      t.integer :num_arrested
+      t.string :image
+      t.string :url
+      t.integer :damages
+      t.integer :police_force
+      t.integer :military_force
+      t.text :sum_of_force
+      t.integer :city_id -->

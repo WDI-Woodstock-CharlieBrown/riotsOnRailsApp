@@ -20,7 +20,7 @@ class RiotsController < ApplicationController
   end
   def create
   	riot = Riot.create(riot_params)
-  	# redirect_to ???
+  	redirect_to "/riots/new"
   end
 
   def edit

@@ -1,2 +1,17 @@
-<h1>Riots#index</h1>
-<p>Find me in app/views/riots/index.html.erb</p>
+<h2>Riots</h2>
+
+
+
+<ul>
+  <% @riots.each do |riot| %>
+    <li>
+      <%= riot.city_state %>
+    </li>
+    <li>
+      <%= riot.year %>
+    </li>
+    <li>
+      <%= riot.num_arrested %>
+    </li>
+  <% end %>
+</ul>
