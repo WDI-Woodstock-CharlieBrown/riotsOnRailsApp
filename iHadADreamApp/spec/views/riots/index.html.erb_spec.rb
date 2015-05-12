@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe City, type: :model do
+RSpec.describe "riots/index.html.erb", type: :view do
   pending "add some examples to (or delete) #{__FILE__}"
 end
