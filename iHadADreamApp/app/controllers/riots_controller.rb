@@ -29,10 +29,11 @@ class RiotsController < ApplicationController
   def update
   	riot = Riot.find(params[:id])
   	riot.update(riot_params)
-  	# redirect_to ???
+  	redirect_to "/riots"
   end
 
   def show
+  	@riot = Riot.find(params[:id])
   end
 
   private

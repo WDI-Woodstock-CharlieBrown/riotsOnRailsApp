@@ -46,10 +46,10 @@
 	<%= f.number_field :sum_of_force %>
 	<p></p>
 	<%= f.label :lat, "Latitude" %>
-	<%= f.number_field :lat %>
+	<%= f.number_field :lat, :step => 'any' %>
 	<p></p>
 	<%= f.label :long, "Longitude" %>
-	<%= f.number_field :long %>
+	<%= f.number_field :long, :step => 'any' %>
 	<p></p>
 	<%= f.label :city_id, "Corresponding City ID" %>
 	<%= f.number_field :city_id %>
