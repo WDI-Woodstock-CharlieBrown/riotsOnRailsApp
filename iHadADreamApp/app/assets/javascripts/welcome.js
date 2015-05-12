@@ -82,7 +82,7 @@ $(document).ready(function(){
 // projectData(data);
 
 
-  setTimeout(function(){
+  // setTimeout(function(){
 
      $('.generate-data').on('click', function(evt) {
           data = [];
@@ -118,11 +118,41 @@ $(document).ready(function(){
     //   {name: 'NYC', lat: -75.0059, long: 41.748817, numPeople: 60}
     // ];
 
-    projectData(data);
+//     projectData(data);
 
-  }, 5000);
+//   }, 5000);
 
+	$('.find_year').on('click', function(evt) {
+		evt.preventDefault();
 
+          data = [];
+          var year = $('.year_data').val();
+
+          $.ajax({
+            method: 'get',
+            url: "/api/riots",
+            success: function(d){
+
+            	for (var i = 0; i < d.length; i++) {
+
+            		if (d[i].year == year) {
+	            		latitude = d[i].lat;
+	            		longitude = d[i].long;
+	            		city = d[i].city_state;
+	            		var arrested = d[i].num_arrested;
+	            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested});
+	            	} else {
+	            		console.log("This event happened in " + d[i].year + ", which was not part of your search.");
+	            	}
+
+            	};
+
+              console.log(d);
+              projectData(data);
+
+            }
+          });
+        });
 
 
 });
