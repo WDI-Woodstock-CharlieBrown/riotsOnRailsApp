@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  
   root 'welcome#index'
 
-  resources :riots
+  devise_for :users
 
+  resources :riots
 
   namespace :api do
     resources :riots
