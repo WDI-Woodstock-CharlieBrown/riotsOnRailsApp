@@ -28,6 +28,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'd3-rails'
 
+gem 'topojson-rails', '~> 1.4.9'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
