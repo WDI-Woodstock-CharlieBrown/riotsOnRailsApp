@@ -9,8 +9,8 @@ require 'CSV'
 namespace :data do
   desc "Import race riots"
 	CSV.foreach('Riots.csv', :headers => true) do |row|
-      riot = Riot.create (row.to_hash)
+      riot = Riot.create!(row.to_hash)
       puts row.to_hash
-      #Riot.save!
+      Riot.save!
   end
 end
