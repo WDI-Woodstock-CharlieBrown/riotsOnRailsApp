@@ -16,36 +16,61 @@ var data;
 function projectData(data){
 
   svg.selectAll("circle")
-  .data(data)
-  .enter()
-  .append("circle")
-  .attr("r", 5)
-  .attr("fill", 'rgba(215, 233, 68, 0.85)')
-  .on("mousedown", function() {
-    //div.text("div.mousedown");
-    $('#widget').hide();
-    $('#widget').text(data.description);
-    $('#widget').fadeIn(2000);
-    //$('body').append(data.description);
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("r", 7)
+    .attr("stroke", "darkblue")
+    .attr("stroke-width", 3)
+    .attr("fill", 'rgba(215, 233, 68, 0.85)')
+    .on("mouseover", mouseOver)
+    .on("mouseout", mouseOut)
+    .on("click", click);
 
-  });
-;
+    function mouseOver(){
+      d3.select(this)
+      .transition()
+      .duration(1000)
+      .attr("r", function(d){ if(d.numPeople > 5000) { return d.numPeople/80 + 15} else { return d.numPeople/30 + 15}});
+    }
+
+    function mouseOut(){
+      d3.select(this)
+      .transition()
+      .duration(1000)
+      .attr("r", function(d){ if(d.numPeople > 5000) { return d.numPeople/80} else { return d.numPeople/30 + 10}})
+    }
+
+
+    function click(data){
+      console.log("I did it!");
+    }
+
+  // function clicker(){
+  //   d3.select(this)
+  //   .transition()
+  //   .duration(2000)
+  //   .attr('r', 30);
+  // }
+
+
 
   svg.selectAll("circle")
   .data(data)
-  .attr("r", 4)
+  .attr("r", 5)
   .attr("transform", function(d) {return "translate(" + projection([d.lat,d.long]) + ")";})
   .transition()
     .duration(4000)
     .delay(1000)
-    .attr("r", function(d){ return d.numPeople/50 })
-    .attr("fill", 'rgba(215, 233, 68, 0.85)');
+    .attr("r", function(d){ if(d.numPeople > 5000) { return d.numPeople/80 } else { return d.numPeople/30 + 10}})
+    .attr("fill", 'rgba(215, 233, 68, 0.5)');
+
 
   svg.selectAll("circle")
     .data(data)
     .exit()
     .remove();
-}
+};
 
 
 $(document).ready(function(){
@@ -58,12 +83,13 @@ $(document).ready(function(){
 
 
   projection = d3.geo.albersUsa()
-      .scale(width);
+      .scale(1000);
 
   path = d3.geo.path()
       .projection(projection);
 
-  svg = d3.select(".map-container").append("svg")
+  svg = d3.select(".map-container")
+      .append("svg")
       .attr("width", width + "px")
       .attr("height", height + "px");
 
@@ -81,16 +107,16 @@ $(document).ready(function(){
 d3.select(window).on('resize', resize);
 
 function resize() {
-  	width = $('.map-container').width();
-  	height = $('.map-container').height();
+    width = $('.map-container').width();
+    height = $('.map-container').height();
 
-  	projection = d3.geo.albersUsa()
-      .scale(1000).translate([width/2, height/2]);
+    projection = d3.geo.albersUsa()
+      .scale(width).translate([width, width/2]);
 
-  	path = d3.geo.path()
+    path = d3.geo.path()
       .projection(projection);
 
-  	svg = d3.select(".map-container").append("svg")
+    svg = d3.select(".map-container").append("svg")
       .attr("width", width + "px")
       .attr("height", height + "px");
   };
