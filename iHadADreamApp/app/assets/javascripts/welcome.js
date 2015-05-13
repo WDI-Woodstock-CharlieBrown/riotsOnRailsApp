@@ -22,11 +22,11 @@ function projectData(data){
   .attr("r", 5)
   .attr("fill", 'rgba(215, 233, 68, 0.85)')
   .on("mousedown", function() {
-    // div.text("div.mousedown");
+    //div.text("div.mousedown");
     $('#widget').hide();
-    $('#widget').text('DATA WILL GO HERE');
+    $('#widget').text(data.description);
     $('#widget').fadeIn(2000);
-    // $('body').append('BOOM it was bad I swear')
+    //$('body').append(data.description);
 
   });
 ;
@@ -47,20 +47,25 @@ function projectData(data){
     .remove();
 }
 
+
 $(document).ready(function(){
 
-  width = window.screen.availWidth;
-  height = window.screen.availHeight;
+  // width = window.screen.availWidth;
+  // height = window.screen.availHeight;
+
+  width = $('.map-container').width();
+  height = $('.map-container').height();
+
 
   projection = d3.geo.albersUsa()
-      .scale(1000);
+      .scale(width);
 
   path = d3.geo.path()
       .projection(projection);
 
-  svg = d3.select("body").append("svg")
-      .attr("width", width)
-      .attr("height", height);
+  svg = d3.select(".map-container").append("svg")
+      .attr("width", width + "px")
+      .attr("height", height + "px");
 
   svg.insert("path")
       .datum(topojson.feature(us, us.objects.land))
@@ -72,6 +77,25 @@ $(document).ready(function(){
       .attr("class", "state")
       .attr("d", path);
 
+
+d3.select(window).on('resize', resize);
+
+function resize() {
+  	width = $('.map-container').width();
+  	height = $('.map-container').height();
+
+  	projection = d3.geo.albersUsa()
+      .scale(1000).translate([width/2, height/2]);
+
+  	path = d3.geo.path()
+      .projection(projection);
+
+  	svg = d3.select(".map-container").append("svg")
+      .attr("width", width + "px")
+      .attr("height", height + "px");
+  };
+
+  
 
   // var data = [
   //   {name: 'Chicago', lat: -87.625579, long: 41.883876, numPeople: 400},
