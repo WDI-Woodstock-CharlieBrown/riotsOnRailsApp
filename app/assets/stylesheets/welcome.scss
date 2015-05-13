@@ -12,7 +12,7 @@ svg {
 }
 
 .land {
- 	
+
  	fill: rgb(95, 135, 160);
   	stroke: black;
 
@@ -53,4 +53,10 @@ svg {
 
 }
 
-
+video#bgvid {
+position: fixed; right: 0; bottom: 0;
+min-width: 100%; min-height: 100%;
+width: auto; height: auto; z-index: -100;
+background: url(riot-police-sarajevo.jpg) no-repeat;
+background-size: cover;
+}
