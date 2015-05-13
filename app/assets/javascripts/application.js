@@ -11,9 +11,10 @@
 // about supported directives.
 //
 //= require jquery
+//= require materialize-sprockets
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
 //= require d3
 //= require topojson
 //= require us.js
+//= require_tree .

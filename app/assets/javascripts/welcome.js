@@ -78,6 +78,7 @@ $(document).ready(function(){
   // width = window.screen.availWidth;
   // height = window.screen.availHeight;
 
+  $('select').material_select();
   width = $('.map-container').width();
   height = $('.map-container').height();
 
@@ -121,7 +122,7 @@ function resize() {
       .attr("height", height + "px");
   };
 
-  
+
 
   // var data = [
   //   {name: 'Chicago', lat: -87.625579, long: 41.883876, numPeople: 400},
@@ -206,4 +207,3 @@ function resize() {
 
 
 });
-
