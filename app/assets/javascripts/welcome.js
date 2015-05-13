@@ -20,8 +20,8 @@ function projectData(data){
     .enter()
     .append("circle")
     .attr("r", 7)
-    .attr("stroke", "darkblue")
-    .attr("stroke-width", 3)
+    .attr("stroke", "rgb(4, 5, 82)")
+    .attr("stroke-width", 2)
     .attr("fill", 'rgba(215, 233, 68, 0.85)')
     .on("mouseover", mouseOver)
     .on("mouseout", mouseOut)
@@ -42,17 +42,29 @@ function projectData(data){
     }
 
 
-    function click(data){
-      console.log("I did it!");
+    function click(){
+
+      var container = d3.select(".data-container").append("svg")
+      .attr("width", 40)
+      .attr('height', 40);
+
+      var circle = container.append("circle")
+       .attr("cx", 15)
+       .attr("cy", 15)
+       .attr("r", 10 ) 
+       .style("fill", '#f00');
+
+      // var svg = d3.select(".data-points").append("svg")
+      // .append("g")
+      // .selectAll('rect')  
+      // .data(data)    
+      // .enter()    
+      // .append('rect')  
+      // .attr('height',10)
+      // .attr('width', d.injuries/10)
+      // .attr('fill', 'lightblue')
+      // .attr('stroke','darkblue')
     }
-
-  // function clicker(){
-  //   d3.select(this)
-  //   .transition()
-  //   .duration(2000)
-  //   .attr('r', 30);
-  // }
-
 
 
   svg.selectAll("circle")
@@ -148,7 +160,8 @@ function resize() {
             		longitude = d[i].long;
             		city = d[i].city_state;
             		var arrested = d[i].num_arrested;
-            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested});
+                var injured = d[i].injuries;
+            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, injuries: injured });
             	};
 
               // longitude = d.features[3].geometry.coordinates[0];

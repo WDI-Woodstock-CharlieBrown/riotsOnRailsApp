@@ -13,14 +13,18 @@ svg {
 
 .land {
 
+
  	fill: rgb(95, 135, 160);
   	stroke: black;
+
+ 	fill: rgb(51, 89, 53);
+  	stroke: white;
 
 }
 
 .state {
   	fill: none;
-  	stroke: black;
+  	stroke: white;
 }
 
 
@@ -37,21 +41,29 @@ svg {
 }*/
 
 .map-container {
-  height: 30rem;
+  height: 33rem;
+  width: 100%;
   margin: 0 auto;
   text-align: center!important;
 
-   .data-container {
-    margin: 0 auto;
-    display: inline-block;
-    overflow: auto;
-  }
-
-  .widget {
-  background-color: lightblue;
-  }
-
 }
+
+.data-container {
+    height: 15rem;
+    width: 90%;
+    margin: 20px auto;
+    padding: 1em;
+    overflow: auto;
+    border: 2px solid black;
+  }
+
+  .data-points {
+  background-color: lightblue;
+  color: white;
+  position: relative;
+  }
+
+
 
 video#bgvid {
 position: fixed; right: 0; bottom: 0;
