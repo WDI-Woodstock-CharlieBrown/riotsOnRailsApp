@@ -30,7 +30,7 @@
         <br><br>
         <h1 class="header center white-text">I AM</h1>
         <h1 class="header center white-text">LESS THAN MAP</h1>
-       
+
         <div class="row center">
           <a href=".map-container">Show me the map</a>
         </div>
@@ -87,13 +87,24 @@
 
 			<form>
 				<input type="text" placeholder="e.g. 1950" class="year_data">
-				<input type="submit" name="Submit" class="find_year">
+        <button class="btn waves-effect waves-light find_year" type="submit" name="action">Submit
+          <i class="mdi-content-send right"></i>
+        </button>
+
 			</form>
-			<button class="generate-data">Show it all</button>
-			<form>
-				<input type="text" name="before_year" class="before_year" placeholder="e.g. 1970">
-				<button type="submit" class="submit_before_year">Display</button>
+      <a class="waves-effect waves-light btn generate-data">Show it all</a>
+
+    	<form>
+				<input type="text" name="before_year" class="before_year" placeholder="Before Year">
+        <a class="waves-effect waves-light btn submit_before_year">Display</a>
 			</form>
+
+      <form>
+        <input type="text" name="after_year" class="after_year" placeholder="After Year">
+
+        <a class="waves-effect waves-light btn submit_after_year">Display</a>
+
+      </form>
 
 			<div class="map-container">
 			</div>
