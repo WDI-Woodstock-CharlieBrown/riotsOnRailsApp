@@ -258,19 +258,15 @@ function resize() {
 
               for (var i = 0; i < d.length; i++){
                
-                if(d[i].year == year) {
                   latitude = d[i].lat;
                   longitude = d[i].long;
                   city = d[i].city_state;
                   var arrested = d[i].num_arrested;
                   var descrip = d[i].description_short;
                   data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
-                } else { 
-                  console.log("nay");
-                }
               };
 
-              console.log(d);
+              
               projectData(data);
 
           }
