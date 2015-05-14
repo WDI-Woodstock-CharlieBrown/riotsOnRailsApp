@@ -41,10 +41,11 @@ svg {
 }*/
 
 .map-container {
-  height: 33rem;
   width: 100%;
   margin: 0 auto;
   text-align: center!important;
+  padding: 10px;
+  overflow: auto;
 
 }
 

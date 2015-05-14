@@ -87,14 +87,41 @@ function projectData(data){
 };
 
 
+function loadAjax(){
+  data = [];
+
+  $.ajax({
+    method: 'get',
+    url: '/api/riots',
+    success: function(d) {
+
+       for (var i = 0; i < d.length; i++) {
+          latitude = d[i].lat;
+          longitude = d[i].long;
+          city = d[i].city_state;
+          var arrested = d[i].num_arrested;
+          var injured = d[i].injuries;
+          var description = d[i].description_short;
+          data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, injuries: injured, description_short: description });
+        };
+      projectData(data);
+    }
+  })
+}
+
+
 $(document).ready(function(){
+
+  setTimeout(function(){
+    loadAjax();
+  }, 8000);
 
   // width = window.screen.availWidth;
   // height = window.screen.availHeight;
 
   $('select').material_select();
-  width = $('.map-container').width();
-  height = $('.map-container').height();
+  width = window.screen.availWidth;
+  height = window.screen.availHeight;
 
 
   projection = d3.geo.albersUsa()
@@ -122,32 +149,36 @@ $(document).ready(function(){
 d3.select(window).on('resize', resize);
 
 function resize() {
-    width = $('.map-container').width();
-    height = $('.map-container').height();
 
-    projection = d3.geo.albersUsa()
-      .scale(width).translate([width, width/2]);
+  d3.select('.map-container').selectAll('svg').remove();
 
-    path = d3.geo.path()
+  width = window.screen.availWidth;
+  height = window.screen.availHeight;
+ 
+
+  projection = d3.geo.albersUsa()
+      .scale(width);
+
+  path = d3.geo.path()
       .projection(projection);
 
-    svg = d3.select(".map-container").append("svg")
+  svg = d3.select(".map-container")
+      .append("svg")
       .attr("width", width + "px")
-      .attr("height", height + "px");
+      .attr("height", width/2 + "px");
+
+  svg.insert("path")
+      .datum(topojson.feature(us, us.objects.land))
+      .attr("class", "land")
+      .attr("d", path);
+
+  svg.insert("path")
+      .datum(topojson.mesh(us, us.objects.states))
+      .attr("class", "state")
+      .attr("d", path);
+   
   };
 
-
-
-  // var data = [
-  //   {name: 'Chicago', lat: -87.625579, long: 41.883876, numPeople: 400},
-  //   {name: 'NYC', lat: -74.0059, long: 40.748817, numPeople: 30},
-  //   {name: 'Rando', lat: -79.0059, long: 40.748817, numPeople: 20}
-  // ];
-
-// projectData(data);
-
-
-  // setTimeout(function(){
 
      $('.generate-data').on('click', function(evt) {
           data = [];
@@ -173,21 +204,12 @@ function resize() {
               // descrip = d.features[3].properties.description;
               // data.push({name: city, lat: longitude, long: latitude, numPeople: 400});
 
-              // console.log(longitude, latitude, city, descrip);
               console.log(d);
               projectData(data);
 
             }
           });
         });
-
-    // var data = [
-    //   {name: 'NYC', lat: -75.0059, long: 41.748817, numPeople: 60}
-    // ];
-
-//     projectData(data);
-
-//   }, 5000);
 
 	$('.find_year').on('click', function(evt) {
 		evt.preventDefault();
@@ -214,8 +236,39 @@ function resize() {
 	            	}
               };
 
+              console.log(d);
+              projectData(data);
 
-            	
+          }
+        })
+      });
+
+
+  $('.submit_before_year').on('click', function(evt) {
+    evt.preventDefault();
+
+          data = [];
+          var year = $('.before_year').val();
+
+          $.ajax({
+            method: 'get',
+            url: "/api/search",
+            data: {before_year: year},
+            success: function(d){
+
+              for (var i = 0; i < d.length; i++){
+               
+                if(d[i].year == year) {
+                  latitude = d[i].lat;
+                  longitude = d[i].long;
+                  city = d[i].city_state;
+                  var arrested = d[i].num_arrested;
+                  var descrip = d[i].description_short;
+                  data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
+                } else { 
+                  console.log("nay");
+                }
+              };
 
               console.log(d);
               projectData(data);
@@ -223,5 +276,7 @@ function resize() {
           }
         })
       });
+
+
 
 });
