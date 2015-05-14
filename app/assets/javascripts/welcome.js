@@ -123,13 +123,18 @@ $(document).ready(function(){
   width = window.screen.availWidth;
   height = window.screen.availHeight;
 
+  var scale = width;
+  var offset = [width/2, height/2];
+
+  //---------------------------
 
   projection = d3.geo.albersUsa()
-      .scale(1000);
+      .scale(scale).translate(offset);
 
   path = d3.geo.path()
       .projection(projection);
 
+//---------------------------
   svg = d3.select(".map-container")
       .append("svg")
       .attr("width", width + "px")
@@ -152,20 +157,28 @@ function resize() {
 
   d3.select('.map-container').selectAll('svg').remove();
 
+  // var scale  = width;
+  // var offset = [width/2, height/2];
+  // var projection = d3.geo.albersUsa().scale(scale).translate(offset);
+  // path = d3.geo.path()
+  //     .projection(projection);
+
   width = window.screen.availWidth;
   height = window.screen.availHeight;
  
+  var scale = width;
+  var offset = [width/2, height/2];
 
-  projection = d3.geo.albersUsa()
-      .scale(width);
+  var projection = d3.geo.albersUsa()
+      .scale(scale).translate(offset);
 
   path = d3.geo.path()
       .projection(projection);
 
   svg = d3.select(".map-container")
       .append("svg")
-      .attr("width", width + "px")
-      .attr("height", width/2 + "px");
+      .attr("width", width + 'px')
+      .attr("height", height + 'px');
 
   svg.insert("path")
       .datum(topojson.feature(us, us.objects.land))
@@ -255,7 +268,8 @@ function resize() {
             url: "/api/search",
             data: {before_year: year},
             success: function(d){
-
+              
+              
               for (var i = 0; i < d.length; i++){
                
                   latitude = d[i].lat;
