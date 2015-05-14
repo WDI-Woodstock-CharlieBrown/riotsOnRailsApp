@@ -44,26 +44,28 @@ function projectData(data){
 
     function click(){
 
-      var container = d3.select(".data-container").append("svg")
-      .attr("width", 40)
-      .attr('height', 40);
+      var dataset = d3.select(this)[0][0].__data__;
 
-      var circle = container.append("circle")
-       .attr("cx", 15)
-       .attr("cy", 15)
-       .attr("r", 10 ) 
-       .style("fill", '#f00');
+      var container = d3.select(".data-container1");
+      var container2 = d3.select(".data-container2");
+      container.selectAll('div').remove();
+      container2.selectAll('p').remove();
 
-      // var svg = d3.select(".data-points").append("svg")
-      // .append("g")
-      // .selectAll('rect')  
-      // .data(data)    
-      // .enter()    
-      // .append('rect')  
-      // .attr('height',10)
-      // .attr('width', d.injuries/10)
-      // .attr('fill', 'lightblue')
-      // .attr('stroke','darkblue')
+      var bar = container.append("div")
+          .transition()
+          .style("fill", "red")
+          .duration(1000)
+          .attr("class", "data-points")
+          .attr("height", function(){if(dataset.numPeople) {dataset.numPeople.to_i/10 + 10} else{return 20}})
+          .attr("width", 100)
+          .text(" - - - Arrested: " + dataset.numPeople);
+
+      var cityname = container2.append("p")
+          .text(dataset.name); 
+
+      var desc = container2.append("p")
+          .text(dataset.description_short);
+  
     }
 
 
@@ -161,7 +163,8 @@ function resize() {
             		city = d[i].city_state;
             		var arrested = d[i].num_arrested;
                 var injured = d[i].injuries;
-            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, injuries: injured });
+                var description = d[i].description_short;
+            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, injuries: injured, description_short: description });
             	};
 
               // longitude = d.features[3].geometry.coordinates[0];
@@ -197,26 +200,28 @@ function resize() {
             url: "/api/riots",
             success: function(d){
 
-            	for (var i = 0; i < d.length; i++) {
-
-            		if (d[i].year == year) {
+            	for (var i = 0; i < d.length; i++){
+               
+            		if(d[i].year == year) {
 	            		latitude = d[i].lat;
 	            		longitude = d[i].long;
 	            		city = d[i].city_state;
 	            		var arrested = d[i].num_arrested;
-	            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested});
-	            	} else {
-	            		console.log("This event happened in " + d[i].year + ", which was not part of your search.");
+                  var descrip = d[i].description_short;
+	            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
+	            	} else { 
+	            		console.log("nay");
 	            	}
+              };
 
-            	};
+
+            	
 
               console.log(d);
               projectData(data);
 
-            }
-          });
-        });
-
+          }
+        })
+      });
 
 });

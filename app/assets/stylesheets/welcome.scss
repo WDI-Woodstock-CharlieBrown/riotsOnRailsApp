@@ -48,27 +48,30 @@ svg {
 
 }
 
-.data-container {
+.data-container1, .data-container2 {
     height: 15rem;
-    width: 90%;
+    width: 48%;
     margin: 20px auto;
     padding: 1em;
     overflow: auto;
-    border: 2px solid black;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: inline-block;
   }
+
 
   .data-points {
-  background-color: lightblue;
-  color: white;
-  position: relative;
+    background-color: black;
+    color: lightgrey;
+    margin: 0 auto;
+    border-radius: 25px;
   }
-
 
 
 video#bgvid {
-position: fixed; right: 0; bottom: 0;
-min-width: 100%; min-height: 100%;
-width: auto; height: auto; z-index: -100;
-background: url(riot-police-sarajevo.jpg) no-repeat;
-background-size: cover;
+  position: fixed; right: 0; bottom: 0;
+  min-width: 100%; min-height: 100%;
+  width: auto; height: auto; z-index: -100;
+  background: url(riot-police-sarajevo.jpg) no-repeat;
+  background-size: cover;
 }
