@@ -61,11 +61,11 @@ function projectData(data){
           .text(" - - - Arrested: " + dataset.numPeople);
 
       var cityname = container2.append("p")
-          .text(dataset.name); 
+          .text(dataset.name);
 
       var desc = container2.append("p")
           .text(dataset.description_short);
-  
+
     }
 
 
@@ -112,9 +112,9 @@ function loadAjax(){
 
 $(document).ready(function(){
 
-  setTimeout(function(){
-    loadAjax();
-  }, 8000);
+  // setTimeout(function(){
+  //   loadAjax();
+  // }, 8000);
 
   // width = window.screen.availWidth;
   // height = window.screen.availHeight;
@@ -165,7 +165,7 @@ function resize() {
 
   width = window.screen.availWidth;
   height = window.screen.availHeight;
- 
+
   var scale = width;
   var offset = [width/2, height/2];
 
@@ -189,7 +189,7 @@ function resize() {
       .datum(topojson.mesh(us, us.objects.states))
       .attr("class", "state")
       .attr("d", path);
-   
+
   };
 
 
@@ -236,7 +236,7 @@ function resize() {
             success: function(d){
 
             	for (var i = 0; i < d.length; i++){
-               
+
             		if(d[i].year == year) {
 	            		latitude = d[i].lat;
 	            		longitude = d[i].long;
@@ -244,7 +244,7 @@ function resize() {
 	            		var arrested = d[i].num_arrested;
                   var descrip = d[i].description_short;
 	            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
-	            	} else { 
+	            	} else {
 	            		console.log("nay");
 	            	}
               };
@@ -257,21 +257,21 @@ function resize() {
       });
 
 
-  $('.submit_before_year').on('click', function(evt) {
+  $('.submit_display').on('click', function(evt) {
     evt.preventDefault();
 
-          data = [];
-          var year = $('.before_year').val();
+          var data = [];
+          var beforeYear = $('.before_year').val();
+          var afterYear = $('.after_year').val();
 
           $.ajax({
             method: 'get',
             url: "/api/search",
-            data: {before_year: year},
+            data: {before_year: beforeYear, after_year: afterYear},
             success: function(d){
-              
-              
+
               for (var i = 0; i < d.length; i++){
-               
+
                   latitude = d[i].lat;
                   longitude = d[i].long;
                   city = d[i].city_state;
@@ -280,7 +280,7 @@ function resize() {
                   data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
               };
 
-              
+
               projectData(data);
 
           }
