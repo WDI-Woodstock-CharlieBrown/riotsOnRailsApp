@@ -15,10 +15,6 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Dir.glob("#{Rails.root}/app/assets/images/**/").each do |path|
-      config.assets.paths << path
-    end
-    
 module IHadADreamApp
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
