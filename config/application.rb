@@ -1,5 +1,9 @@
 require File.expand_path('../boot', __FILE__)
 
+Dir.glob("#{Rails.root}/app/assets/images/**/").each do |path|
+      config.assets.paths << path
+    end
+
 require "rails"
 # Pick the frameworks you want:
 require "active_model/railtie"
