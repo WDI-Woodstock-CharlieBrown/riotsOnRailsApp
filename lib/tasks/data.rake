@@ -4,14 +4,13 @@ namespace :data do
   task :riots => :environment do
     require 'CSV'
 
-    filename = Dir.glob("#{Rails.root}/*.csv/").each do |file|
-      load "#{file}"
-    end
+    Dir.glob(File.dirname(__FILE__) + "/*.csv").each do |file|
+        CSV.foreach(csv_file, {:headers => true, :col_sep => ";"}) do |row|
+          riot = Riot.create!(row.to_hash)
+          puts row.to_hash
+        end
 
-    puts 'LOADING.....'
-  	CSV.foreach(filename, :headers => true) do |row|
-      riot = Riot.create!(row.to_hash)
-      puts row.to_hash
-    end
+      end
+
   end
 end
