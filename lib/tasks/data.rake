@@ -2,7 +2,7 @@
 namespace :data do
   desc "Import race riots"
   task :riots => :environment do
-    require 'CSV'
+    require 'csv'
 
     filename = File.expand_path('../../../Riots.csv', __FILE__)
 
