@@ -4,7 +4,9 @@ namespace :data do
   task :riots => :environment do
     require 'CSV'
 
-    filename = Dir.glob("#{Rails.root}/Riots.csv")
+    filename = Dir.glob("#{Rails.root}/*.csv/").each do |file|
+      load "#{file}"
+    end
 
     puts 'LOADING.....'
   	CSV.foreach(filename, :headers => true) do |row|
