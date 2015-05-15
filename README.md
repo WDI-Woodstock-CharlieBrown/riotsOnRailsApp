@@ -5,6 +5,11 @@
 RiotsOnRailsApp is a web application to document large scale racial tensions since 1950.  The application uses Ruby on Rails, Javascript and D3 Visualizations to display the maginitude of each event.  The size of each bubble corresponds to the number of documented arrests during each event.  A data container displays a summary of the event.
 
 After signing up, users are encouraged to add their own event to display on RiotsOnRails.  We hope users can add events which were not documented or covered by the media.
+##Features
+
+- geoJSON data rendered with D3.js using U.S. map information
+- Event-triggered visualization interactions
+- CRUD action with scoped queries
 
 
 ##Employed Technologies
