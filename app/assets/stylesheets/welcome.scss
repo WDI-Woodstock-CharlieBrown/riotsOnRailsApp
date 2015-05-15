@@ -6,11 +6,6 @@ body {
   font-size: 16px;
 }
 
-svg {
-  display: inline-block;
-  float: left;
-}
-
 .land {
 
 
@@ -65,6 +60,15 @@ svg {
     border: 1px solid black;
     border-radius: 5px;
     display: inline-block;
+  
+    div {
+      // to be styled ***
+    }
+
+    p {
+      // to be styled ***
+    }
+
   }
 
 
