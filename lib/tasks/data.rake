@@ -4,7 +4,7 @@ namespace :data do
   task :riots => :environment do
     require 'CSV'
 
-    filename = File.expand_path('../../*.csv', __FILE__)
+    filename = File.expand_path('../../../Riots.csv', __FILE__)
 
     CSV.foreach(filename, :headers=>true, :col_sep => ";") do |row|
       riot = Riot.create!(row.to_hash)
@@ -13,7 +13,7 @@ namespace :data do
 
   end
 end
-    
+
     # Dir.glob(File.dirname(__FILE__) + "/*.csv").each do |file|
     #     CSV.foreach(file, {:headers => true, :col_sep => ";"}) do |row|
     #       riot = Riot.create!(row.to_hash)
