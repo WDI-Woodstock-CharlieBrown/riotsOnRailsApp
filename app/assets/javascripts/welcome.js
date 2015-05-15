@@ -62,11 +62,11 @@ app.projectData = function projectData(data){
           .text(" - - - Arrested: " + dataset.numPeople);
 
       var cityname = container2.append("p")
-          .text(dataset.name); 
+          .text(dataset.name);
 
       var desc = container2.append("p")
           .text(dataset.description_short);
-  
+
     }
 
 
@@ -113,20 +113,20 @@ function loadAjax(){
 
 $(document).ready(function(){
 
-  setTimeout(function(){
-    loadAjax();
-  }, 8000);
+  // setTimeout(function(){
+  //   loadAjax();
+  // }, 8000);
 
   // width = window.screen.availWidth;
   // height = window.screen.availHeight;
 
-  
+
   app.width = window.innerWidth;
   app.height = window.innerHeight;
 
   var scale = app.width;
   var offset = [app.width/2, app.height/2];
- 
+
   //---------------------------
 
   app.projection = d3.geo.albersUsa()
@@ -167,13 +167,15 @@ app.resize = function resize() {
 //   /* true to fetch page from server */
 // });
 
+
   d3.select('.map-container').selectAll('svg').remove();
   d3.select('.map-container').selectAll('path').remove();
   d3.select('.map-container').selectAll('circle').remove();
 
+
   app.width = (window.innerWidth);
   app.height = (window.innerHeight);
-  
+
   var scale = app.width;
   var offset = [app.width/2, app.height/2];
 
@@ -199,7 +201,7 @@ app.resize = function resize() {
       .attr("d", app.path);
 
       loadAjax();
-   
+
   };
 
 
@@ -246,7 +248,7 @@ app.resize = function resize() {
             success: function(d){
 
             	for (var i = 0; i < d.length; i++){
-               
+
             		if(d[i].year == year) {
 	            		var latitude = d[i].lat;
 	            		var longitude = d[i].long;
@@ -254,7 +256,7 @@ app.resize = function resize() {
 	            		var arrested = d[i].num_arrested;
                   var descrip = d[i].description_short;
 	            		app.data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
-	            	} else { 
+	            	} else {
 	            		console.log("nay");
 	            	}
               };
@@ -267,21 +269,22 @@ app.resize = function resize() {
       });
 
 
-  $('.submit_before_year').on('click', function(evt) {
+  $('.submit_display').on('click', function(evt) {
     evt.preventDefault();
 
+
           app.data = [];
-          var year = $('.before_year').val();
+          app.beforeYear = $('.before_year').val();
+          app.afterYear = $('.after_year').val();
+
 
           $.ajax({
             method: 'get',
             url: "/api/search",
-            data: {before_year: year},
+            data: {before_year: app.beforeYear, after_year: app.afterYear},
             success: function(d){
-              
-              
+
               for (var i = 0; i < d.length; i++){
-               
                   var latitude = d[i].lat;
                   var longitude = d[i].long;
                   var city = d[i].city_state;
@@ -290,8 +293,8 @@ app.resize = function resize() {
                   app.data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
               };
 
-              
               app.projectData(app.data);
+
 
           }
         })
