@@ -156,9 +156,9 @@ $(document).ready(function(){
 //    R E S I Z E     F U N C T I O N
 //=============================================
 
-d3.select(window).on('resize', app.resize);
+d3.select(window).on('resize', resize);
 
-app.resize = function resize() {
+function resize() {
 
 //   $('.map-container').bind('resize', function(e)
 // {
@@ -200,7 +200,7 @@ app.resize = function resize() {
       .attr("class", "state")
       .attr("d", app.path);
 
-      loadAjax();
+      app.projectData(app.data);
 
   };
 
