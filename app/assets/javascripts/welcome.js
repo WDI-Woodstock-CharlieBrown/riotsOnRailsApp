@@ -53,15 +53,34 @@ app.projectData = function projectData(data){
       container2.selectAll('p').remove();
 
       var bar = container.append("div")
-          .transition()
-          .style("fill", "red")
-          .duration(1000)
-          .attr("class", "data-points")
-          .attr("height", function(){if(dataset.numPeople) {dataset.numPeople.to_i/10 + 10} else{return 20}})
+                .attr("class", "arrest-data");
+
+    //   svg.selectAll("circle")
+    // .data(app.data)
+    // .enter()
+    // .append("circle")
+    var barText = bar.append("div")
+          .attr("class", "text")
+          .text(  function() {  if(dataset.numPeople) { return dataset.numPeople + " arrested" } else {return "The number of arrests is currently unavailable."}  } );
+
+    var svgContainer = d3.select(".arrest-data").append('svg')
+          .attr("height", function() {  if(dataset.numPeople) {return dataset.numPeople/10 + 20} else {return 50}  })
+          .attr("width", 100);
+
+    var bar = svgContainer.append('rect')
+          .attr("x", 10)
+          .attr("y", 20)
+          .attr("height", 0)
           .attr("width", 100)
-          .text(" - - - Arrested: " + dataset.numPeople);
+          .attr("class", "data-point")     
+          .transition()
+          .delay(500)
+          .duration(1500)
+          .attr("height", function() {  if(dataset.numPeople) {return dataset.numPeople/10 + 20} else {return 1} }  )
+          .style("fill", "blue");
 
       var cityname = container2.append("p")
+          .attr("class","city-info")
           .text(dataset.name);
 
       var desc = container2.append("p")
