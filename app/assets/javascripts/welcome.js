@@ -81,10 +81,10 @@ app.projectData = function projectData(data){
     .attr("fill", 'rgba(215, 233, 68, 0.5)');
 
 
-  // svg.selectAll("circle")
-  //   .data(data)
-  //   .exit()
-  //   .remove();
+    app.svg.selectAll("circle")
+      .data(data)
+      .exit()
+      .remove();
 };
 
 
