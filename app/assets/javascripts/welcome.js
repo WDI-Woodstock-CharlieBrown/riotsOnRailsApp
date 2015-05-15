@@ -5,18 +5,19 @@
 
 var app = app || {};
 
-var width, height, projection, path, svg;
+// var width, height, projection, path, svg;
 
-var latitude;
-var longitude;
-var city;
-var data;
+app.width;
+app.height;
+app.projection;
+app.path;
+app.svg;
+app.data;
+app.projectData = function projectData(data){
+// function projectData(data){
 
-
-function projectData(data){
-
-  svg.selectAll("circle")
-    .data(data)
+  app.svg.selectAll("circle")
+    .data(app.data)
     .enter()
     .append("circle")
     .attr("r", 7)
@@ -69,10 +70,10 @@ function projectData(data){
     }
 
 
-  svg.selectAll("circle")
-  .data(data)
+  app.svg.selectAll("circle")
+  .data(app.data)
   .attr("r", 5)
-  .attr("transform", function(d) {return "translate(" + projection([d.lat,d.long]) + ")";})
+  .attr("transform", function(d) {return "translate(" + app.projection([d.lat,d.long]) + ")";})
   .transition()
     .duration(4000)
     .delay(1000)
@@ -80,15 +81,15 @@ function projectData(data){
     .attr("fill", 'rgba(215, 233, 68, 0.5)');
 
 
-  svg.selectAll("circle")
-    .data(data)
-    .exit()
-    .remove();
+  // svg.selectAll("circle")
+  //   .data(data)
+  //   .exit()
+  //   .remove();
 };
 
 
 function loadAjax(){
-  data = [];
+  app.data = [];
 
   $.ajax({
     method: 'get',
@@ -96,15 +97,15 @@ function loadAjax(){
     success: function(d) {
 
        for (var i = 0; i < d.length; i++) {
-          latitude = d[i].lat;
-          longitude = d[i].long;
-          city = d[i].city_state;
+          var latitude = d[i].lat;
+          var longitude = d[i].long;
+          var city = d[i].city_state;
           var arrested = d[i].num_arrested;
           var injured = d[i].injuries;
           var description = d[i].description_short;
-          data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, injuries: injured, description_short: description });
+          app.data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, injuries: injured, description_short: description });
         };
-      projectData(data);
+      app.projectData(app.data);
     }
   })
 }
@@ -119,82 +120,93 @@ $(document).ready(function(){
   // width = window.screen.availWidth;
   // height = window.screen.availHeight;
 
-  $('select').material_select();
-  width = window.screen.availWidth;
-  height = window.screen.availHeight;
 
-  var scale = width;
-  var offset = [width/2, height/2];
+  app.width = window.innerWidth;
+  app.height = window.innerHeight;
+
+  var scale = app.width;
+  var offset = [app.width/2, app.height/2];
 
   //---------------------------
 
-  projection = d3.geo.albersUsa()
+  app.projection = d3.geo.albersUsa()
       .scale(scale).translate(offset);
 
-  path = d3.geo.path()
-      .projection(projection);
+  app.path = d3.geo.path()
+      .projection(app.projection);
 
 //---------------------------
-  svg = d3.select(".map-container")
+  app.svg = d3.select(".map-container")
       .append("svg")
-      .attr("width", width + "px")
-      .attr("height", height + "px");
+      .attr("width", app.width + "px")
+      .attr("height", app.height + "px");
 
-  svg.insert("path")
+  app.svg.insert("path")
       .datum(topojson.feature(us, us.objects.land))
       .attr("class", "land")
-      .attr("d", path);
+      .attr("d", app.path);
 
-  svg.insert("path")
+  app.svg.insert("path")
       .datum(topojson.mesh(us, us.objects.states))
       .attr("class", "state")
-      .attr("d", path);
+      .attr("d", app.path);
 
 
-d3.select(window).on('resize', resize);
+//=============================================
+//    R E S I Z E     F U N C T I O N
+//=============================================
 
-function resize() {
+d3.select(window).on('resize', app.resize);
+
+app.resize = function resize() {
+
+//   $('.map-container').bind('resize', function(e)
+// {
+//   console.log('window resized..');
+//   this.location.reload(false); /* false to get page from cache */
+//   /* true to fetch page from server */
+// });
+
 
   d3.select('.map-container').selectAll('svg').remove();
+  d3.select('.map-container').selectAll('path').remove();
+  d3.select('.map-container').selectAll('circle').remove();
 
-  // var scale  = width;
-  // var offset = [width/2, height/2];
-  // var projection = d3.geo.albersUsa().scale(scale).translate(offset);
-  // path = d3.geo.path()
-  //     .projection(projection);
 
-  width = window.screen.availWidth;
-  height = window.screen.availHeight;
+  app.width = (window.innerWidth);
+  app.height = (window.innerHeight);
 
-  var scale = width;
-  var offset = [width/2, height/2];
+  var scale = app.width;
+  var offset = [app.width/2, app.height/2];
 
-  var projection = d3.geo.albersUsa()
+  app.projection = d3.geo.albersUsa()
       .scale(scale).translate(offset);
 
-  path = d3.geo.path()
-      .projection(projection);
+  app.path = d3.geo.path()
+      .projection(app.projection);
 
-  svg = d3.select(".map-container")
+  app.svg = d3.select(".map-container")
       .append("svg")
-      .attr("width", width + 'px')
-      .attr("height", height + 'px');
+      .attr("width", app.width + 'px')
+      .attr("height", app.height +'px');
 
-  svg.insert("path")
+  app.svg.insert("path")
       .datum(topojson.feature(us, us.objects.land))
       .attr("class", "land")
-      .attr("d", path);
+      .attr("d", app.path);
 
-  svg.insert("path")
+  app.svg.insert("path")
       .datum(topojson.mesh(us, us.objects.states))
       .attr("class", "state")
-      .attr("d", path);
+      .attr("d", app.path);
+
+      loadAjax();
 
   };
 
 
      $('.generate-data').on('click', function(evt) {
-          data = [];
+          app.data = [];
 
           $.ajax({
             method: 'get',
@@ -202,13 +214,13 @@ function resize() {
             success: function(d){
 
             	for (var i = 0; i < d.length; i++) {
-            		latitude = d[i].lat;
-            		longitude = d[i].long;
-            		city = d[i].city_state;
+            		var latitude = d[i].lat;
+            		var longitude = d[i].long;
+            		var city = d[i].city_state;
             		var arrested = d[i].num_arrested;
                 var injured = d[i].injuries;
                 var description = d[i].description_short;
-            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, injuries: injured, description_short: description });
+            		app.data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, injuries: injured, description_short: description });
             	};
 
               // longitude = d.features[3].geometry.coordinates[0];
@@ -218,7 +230,7 @@ function resize() {
               // data.push({name: city, lat: longitude, long: latitude, numPeople: 400});
 
               console.log(d);
-              projectData(data);
+              app.projectData(app.data);
 
             }
           });
@@ -227,7 +239,7 @@ function resize() {
 	$('.find_year').on('click', function(evt) {
 		evt.preventDefault();
 
-          data = [];
+          app.data = [];
           var year = $('.year_data').val();
 
           $.ajax({
@@ -238,19 +250,19 @@ function resize() {
             	for (var i = 0; i < d.length; i++){
 
             		if(d[i].year == year) {
-	            		latitude = d[i].lat;
-	            		longitude = d[i].long;
-	            		city = d[i].city_state;
+	            		var latitude = d[i].lat;
+	            		var longitude = d[i].long;
+	            		var city = d[i].city_state;
 	            		var arrested = d[i].num_arrested;
                   var descrip = d[i].description_short;
-	            		data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
+	            		app.data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
 	            	} else {
 	            		console.log("nay");
 	            	}
               };
 
               console.log(d);
-              projectData(data);
+              app.projectData(app.data);
 
           }
         })
@@ -260,28 +272,29 @@ function resize() {
   $('.submit_display').on('click', function(evt) {
     evt.preventDefault();
 
-          var data = [];
-          var beforeYear = $('.before_year').val();
-          var afterYear = $('.after_year').val();
+
+          app.data = [];
+          app.beforeYear = $('.before_year').val();
+          app.afterYear = $('.after_year').val();
+
 
           $.ajax({
             method: 'get',
             url: "/api/search",
-            data: {before_year: beforeYear, after_year: afterYear},
+            data: {before_year: app.beforeYear, after_year: app.afterYear},
             success: function(d){
 
               for (var i = 0; i < d.length; i++){
-
-                  latitude = d[i].lat;
-                  longitude = d[i].long;
-                  city = d[i].city_state;
+                  var latitude = d[i].lat;
+                  var longitude = d[i].long;
+                  var city = d[i].city_state;
                   var arrested = d[i].num_arrested;
                   var descrip = d[i].description_short;
-                  data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
+                  app.data.push({name: city, lat: latitude, long: longitude, numPeople: arrested, description_short: descrip});
               };
 
+              app.projectData(app.data);
 
-              projectData(data);
 
           }
         })

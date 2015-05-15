@@ -11,7 +11,7 @@ class RiotsController < ApplicationController
 #           PUT    /riots/:id(.:format)      riots#update
 #           DELETE /riots/:id(.:format)      riots#destroy
 
-
+ before_filter :authenticate_user!, :except => [:index]
 
   def index
   	@riots = Riot.all
