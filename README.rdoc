@@ -5,7 +5,7 @@ RiotsOnRails is a web application to document large scale racial tensions since 
 
 After signing up, users are encouraged to add their own event to display on RiotsOnRails.  We hope users can add events which were not documented or covered by the media.
 
-![Screen Shot](/app.gif)
+![alt tag](https://raw.github.com/WDI-Woodstock-CharlieBrown/riotsOnRailsApp/app.gif)
 
 RiotsOnRails uses:
 
