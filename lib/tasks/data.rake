@@ -6,7 +6,7 @@ namespace :data do
 
     filename = File.expand_path('../../../Riots.csv', __FILE__)
 
-    CSV.foreach(filename, :headers=>true, :col_sep => ";") do |row|
+    CSV.foreach(filename, :headers=>true) do |row|
       riot = Riot.create!(row.to_hash)
       puts row.to_hash
     end
